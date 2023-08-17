@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-dark>
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.2.1/hamburgers.min.css">
+     <link rel="stylesheet" href="static/css/dom_css.css">
+     <title>ejerciciosDOM</title>
+</head>
+<body data-dark>
+     <header class="header">
+     <h1>Ejercicios DOM</h1>
+     </header>
+     <input type="hidden" value="">
+     <button class="panel-btn hamburger hamburger--vortex" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+     </button>
+
+     <aside class="panel">
+          <nav class="menu">
+               <a href="#seccion1">Alarma y reloj digital</a>
+               <a href="#seccion2">Eventos teclado</a>
+               <a href="#seccion3">Countdown</a>
+               <a href="#seccion4">Responsive con JS</a>
+               <a href="#seccion5">Responsive Tester</a>
+               <a href="#seccion6">Deteccion de dispositibos (User Agent)</a>
+               <a href="#seccion7">Deteccion de red</a>
+               <a href="#seccion8">Deteccion de camara</a>
+               <a href="#seccion9">Detecciond e localizacion</a>
+               <a href="#seccion10">Search filter</a>
+          </nav>
+     </aside>
+
+     <main>
+          <section id="seccion1" class="seccion">
+               <h2>Alarma y reloj digital</h2>
+               <div id="reloj">
+                    <h3 id="txtReloj"></h3>
+               </div>
+               <div>
+                    <button id="iniciar-reloj">Iniciar reloj</button>
+                    <button id="detener-reloj"> detener reloj</button>
+                    <button id="iniciar-alarma">Iniciar alarma</button>
+                    <button id="detener-alarma">Detener alarma</button>
+               </div>
+          </section>
+          <section id="seccion2" class="seccion">
+               <h2>Eventos teclado</h2>
+
+               <article class="stage">
+                    <div class="ball">
+
+                    </div>
+               </article>
+
+          </section>
+          <section id="seccion3" class="seccion">
+               <h2>Countdown</h2>
+               <div id="countdown">
+               </div>
+          </section>
+          
+          <section id="seccion4" class="seccion">
+               <h2>Responsive con JS</h2>
+               <div id="youtube"></div>
+               <div id="gmaps"></div>
+          </section>
+          <section id="seccion5" class="seccion">
+               <h2>Responsive tester</h2>
+               <form id="responsive-tester">
+                    <label for="url">Url del sitio</label>
+                    <input type="text" id="url" required>
+                    <br>
+                    <label for="width">Ancho de ventana</label>
+                    <input type="text" id="width" required>
+                    <br>
+                    <label for="height">Largo de ventana</label>
+                    <input type="text" id="height" required>
+                    <br>
+                    <input type="submit" name="abrir" value="abrir" id="abrir">
+                    <input type="button" name="cerrar" value="cerrar" id="cerrar">
+               </form>
+          </section>
+          <section id="seccion6" class="seccion">
+               <h2>Deteccion de dispositibos <br>(User Agent)</h2>
+               <div id="user-device"></div>
+          </section>
+          <section id="seccion7" class="seccion">
+               <h2>Deteccion de red</h2>
+          </section>
+          <section id="seccion8" class="seccion">
+               <h2>Deteccion de camara</h2>
+               <div class="video-div">
+                    <video id="video"></video>
+               </div>
+          </section>
+          <section id="seccion9" class="seccion">
+               <h2>Deteccion de localizacion</h2>
+               <div id="localizacion"></div>
+          </section>
+          <section id="seccion10" class="seccion">
+               <h2>Search filter</h2>
+               <input type="search" placeholder="Buscar articulos" class="filtro">
+               <div class="cards"></div>
+          </section>
+     </main>
+     <button class="scroll-btn hidden">&#11014;</button>
+     <button class="darkModeBtn">🌙</button>
+     <script src="static/js/ejerciciosDOM/index_dom.js" type="module"></script>
+</body>
+</html>
