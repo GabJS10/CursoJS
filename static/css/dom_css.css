@@ -218,3 +218,30 @@ img {
 .offline {
      background-color: red;
 }
+
+.cards {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   }
+   
+   .card {
+     background-color: #222;
+     color: #f7df1e;
+     transition: all 0.5s ease-out;
+     margin: 0.5rem;
+   }
+   .card img {
+     width: 100%;
+     height: auto;
+   }
+   
+   .card figcaption {
+     padding: 1rem;
+   }
+   
+   .filter {
+     /* display: none; */
+     visibility: hidden;
+     opacity: 0;
+     order: 1;
+   }

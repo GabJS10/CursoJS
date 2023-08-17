@@ -11,6 +11,9 @@ import UserDeviceInfo from "./UserAgent.js";
 import online_offline from "./deteccionRed.js";
 import abrirCamara from "./camara.js";
 import getGeolocalizacion from "./geolocalizacion.js";
+import { crearCartas, filtro } from "./SearchFilter.js";
+import { APICards } from "./APICards.js";
+
 const d = document
 
 d.addEventListener('DOMContentLoaded', e => {
@@ -25,8 +28,8 @@ d.addEventListener('DOMContentLoaded', e => {
      UserDeviceInfo('user-device')
      abrirCamara('video')
      getGeolocalizacion('localizacion')
-
-
+     crearCartas(".cards",APICards)
+     filtro(".filtro",".card")
 
 
 
