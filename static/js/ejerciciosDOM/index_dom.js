@@ -13,6 +13,8 @@ import abrirCamara from "./camara.js";
 import getGeolocalizacion from "./geolocalizacion.js";
 import { crearCartas, filtro } from "./SearchFilter.js";
 import { APICards } from "./APICards.js";
+import { mostrarParticipantes, sortear } from "./Sorteo.js";
+import slider from "./Slider.js";
 
 const d = document
 
@@ -30,6 +32,10 @@ d.addEventListener('DOMContentLoaded', e => {
      getGeolocalizacion('localizacion')
      crearCartas(".cards",APICards)
      filtro(".filtro",".card")
+     mostrarParticipantes('.contenedorParticipantes', ['JavaScript','PHP','JAVA','C','Python','Ruby','Go','VisualBasic',
+     'Rust','Perl'])
+     sortear('iniciarSorteo','.participante')
+     slider(".slider-slide",".prev",".next")
 
 
 
