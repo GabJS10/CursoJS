@@ -15,6 +15,9 @@ import { crearCartas, filtro } from "./SearchFilter.js";
 import { APICards } from "./APICards.js";
 import { mostrarParticipantes, sortear } from "./Sorteo.js";
 import slider from "./Slider.js";
+import ScrollSpy from "./ScrollSpy.js";
+import video_inteligente from "./videoInteligente.js";
+import validarFormulario from "./formulario.js";
 
 const d = document
 
@@ -36,8 +39,9 @@ d.addEventListener('DOMContentLoaded', e => {
      'Rust','Perl'])
      sortear('iniciarSorteo','.participante')
      slider(".slider-slide",".prev",".next")
-
-
+     ScrollSpy()
+     video_inteligente()
+     validarFormulario()
 
      MakeResponsive('youtube','(min-width: 1024px)',`<a href="https://www.youtube.com/watch?v=6IwUl-4pAzc&list=PLvq-jIkSeTUZ6QgYYO3MwG9EMqC-KoLXA&index=91&t=1388s&ab_channel=jonmircha" target="_blank" rel="
      noopener">Ver video</a>`,`<iframe width="560" height="315" src="https://www.youtube.com/embed/6IwUl-4pAzc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`)
