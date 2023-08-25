@@ -36,9 +36,8 @@
                <a href="#seccion12" data-scroll-spy>Responsive slider</a>
                <a href="#seccion13" data-scroll-spy>Video inteligente</a>
                <a href="#seccion14" data-scroll-spy>Validacion de formulario</a>
-               <a href="#seccion15" data-scroll-spy>Seccion 15</a>
-               <a href="#seccion16" data-scroll-spy>Seccion 16</a>
-               <a href="#seccion17" data-scroll-spy>Seccion 17</a>
+               <a href="#seccion15" data-scroll-spy>Narrador (Lector de texto)</a>
+               
           </nav>
      </aside>
 
@@ -151,7 +150,7 @@
           </section>
           <section id="seccion14" class="seccion" data-scroll-spy>
                <h2>Validacion de formularios</h2>
-               <form class="contact-form">
+               <form class="contact-form" action="https://formsubmit.co/jgabis65@gmail.com" method="POST" target="_blank">
                     <legend>Envíanos tus comentarios</legend>
                     <input type="text" name="name" placeholder="Escribe tu nombre"
                          title="Nombre sólo acepta letras y espacios en blanco" pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
@@ -173,14 +172,14 @@
                </form>
           </section>
           <section id="seccion15" class="seccion" data-scroll-spy>
-               <h2>Seccion 15</h2>
+               <h2>Narrador (Lector de texto)</h2>
+               <div>
+                    <select id="voces"></select><br><br>
+                    <textarea  id="texto" cols="30" rows="10" placeholder="Escribe algo"></textarea><br>
+                    <button type="button" id="leer">Leer</button>
+               </div>
           </section>
-          <section id="seccion16" class="seccion" data-scroll-spy>
-               <h2>Seccion 16</h2>
-          </section>
-          <section id="seccion17" class="seccion" data-scroll-spy>
-               <h2>Seccion 17</h2>
-          </section>
+         
 
      </main>
      <button class="scroll-btn hidden">&#11014;</button>

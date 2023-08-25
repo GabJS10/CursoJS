@@ -4,7 +4,8 @@ const d = document
 export default function validarFormulario() {
      const $form = d.querySelector(".contact-form")
      const $inputs = d.querySelectorAll(".contact-form [required]")
-
+     const $loader = d.querySelector(".contact-form-loader")
+     const $respuesta = d.querySelector(".contact-form-response")
      $inputs.forEach(input => {
           const $span = d.createElement("span")
           $span.id = input.name
@@ -30,5 +31,25 @@ export default function validarFormulario() {
                }
 
           }
+     })
+
+
+     d.addEventListener("submit",e => {
+          //e.preventDefault()
+
+          $loader.classList.remove("none")
+
+          setTimeout(() => {
+               $loader.classList.add("none")
+               $respuesta.classList.remove("none")
+
+               setTimeout(() => {
+                    $respuesta.classList.add("none")
+                    $form.reset()
+               }, 3000);
+
+
+          }, 3000);
+
      })
 }

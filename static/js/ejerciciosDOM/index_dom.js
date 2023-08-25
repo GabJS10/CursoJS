@@ -18,6 +18,7 @@ import slider from "./Slider.js";
 import ScrollSpy from "./ScrollSpy.js";
 import video_inteligente from "./videoInteligente.js";
 import validarFormulario from "./formulario.js";
+import LeerVoz from "./LectorVoz.js";
 
 const d = document
 
@@ -42,11 +43,12 @@ d.addEventListener('DOMContentLoaded', e => {
      ScrollSpy()
      video_inteligente()
      validarFormulario()
-
      MakeResponsive('youtube','(min-width: 1024px)',`<a href="https://www.youtube.com/watch?v=6IwUl-4pAzc&list=PLvq-jIkSeTUZ6QgYYO3MwG9EMqC-KoLXA&index=91&t=1388s&ab_channel=jonmircha" target="_blank" rel="
      noopener">Ver video</a>`,`<iframe width="560" height="315" src="https://www.youtube.com/embed/6IwUl-4pAzc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`)
      MakeResponsive('gmaps','(min-width: 1024px)',`<a href="https://goo.gl/maps/yUMXr41gT9ftHkhXA" target="_blank" rel="
      noopener">Ver Mapa</a>`,`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.0009561780707!2d-72.91177842595428!3d11.55178864441575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e8b62a8697ae5af%3A0x14602dcf92cab16!2sCatedral%20Nuestra%20Se%C3%B1ora%20de%20los%20Remedios!5e0!3m2!1ses!2sco!4v1691672482100!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`)
+     LeerVoz()
+
 })
 
 d.addEventListener('keydown',e => {
