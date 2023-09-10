@@ -1,0 +1,51 @@
+{
+  "Saiyajines": [
+    {
+      "nombre": "Goku",
+      "Ki": "200000000",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "nombre": "Vegeta",
+      "Ki": 500000
+    },
+    {
+      "id": 5,
+      "nombre": "Bardock",
+      "Ki": 11500
+    },
+    {
+      "nombre": "Kefla",
+      "Ki": "1",
+      "id": 6
+    }
+  ],
+  "Humanos": [
+    {
+      "id": 1,
+      "nombre": "Krilin",
+      "Ki": 15000
+    },
+    {
+      "id": 2,
+      "nombre": "Yamcha",
+      "Ki": 1500
+    },
+    {
+      "id": 3,
+      "nombre": "Ten shin han",
+      "Ki": 25000
+    },
+    {
+      "id": 4,
+      "nombre": "Bulma",
+      "Ki": 250
+    },
+    {
+      "id": 5,
+      "nombre": "Pan",
+      "Ki": 5000
+    }
+  ]
+}

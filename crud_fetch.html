@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD FETCH</title>
+</head>
+
+<body>
+  <h1>CRUD API REST FETCH</h1>
+  <section class="crud">
+    <article>
+      <h2 class="crud-title">Agregar Personaje</h2>
+      <form class="crud-form">
+        <input type="text" name="nombre" placeholder="nombre" required>
+        <br>
+        <input type="number" name="ki" placeholder="Ki" required>
+        <br>
+        <input type="submit" value="Enviar">
+        <input type="hidden" name="id">
+      </form>
+    </article>
+    <article>
+      <h2>Ver Personajes</h2>
+      <table class="crud-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Ki</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+  </section>
+  <template id="crud-template">
+    <tr>
+      <td class="name"></td>
+      <td class="ki"></td>
+      <td>
+        <button class="edit">Editar</button>
+        <button class="delete">Eliminar</button>
+      </td>
+    </tr>
+  </template>
+
+  <script>
+    const d = document,
+      $table = d.querySelector(".crud-table"),
+      $form = d.querySelector(".crud-form"),
+      $title = d.querySelector(".crud-title"),
+      $template = d.getElementById("crud-template").content,
+      $fragment = d.createDocumentFragment();
+
+    //Funcion para obtener Todos los registros
+    async function getAll() {
+      try {
+        const request = await fetch("http://localhost:3000/Saiyajines"),
+          response = await request.json()
+
+        if (!request.ok) throw { status: request.status, message: request.statusText || "Ocurrio un error" };
+
+        response.forEach(saiyajin => {
+          $template.querySelector(".name").textContent = saiyajin.nombre
+          $template.querySelector(".ki").textContent = saiyajin.Ki
+          $template.querySelector(".edit").dataset.id = saiyajin.id
+          $template.querySelector(".delete").dataset.id = saiyajin.id
+          let $clone = d.importNode($template, true)
+          $fragment.appendChild($clone)
+        });
+        $table.querySelector("tbody").appendChild($fragment)
+      } catch (error) {
+        $table.insertAdjacentHTML("afterend", `<p><b> ${error.status} - ${error.message} </b></p>`)
+      }
+    }
+    //Funcion para obtener un registro y prepararlo para ser actualizado  
+    async function getOne(id) {
+      try {
+        const request = await fetch(`http://localhost:3000/Saiyajines/${id}`),
+          response = await request.json()
+        if (!request.ok) throw { status: request.status, message: request.statusText || "Ocurrio un error" };
+
+        d.querySelector(".crud-title").textContent = "Actualizar"
+        $form.nombre.value = response.nombre
+        $form.ki.value = response.Ki
+        $form.id.value = id
+
+      } catch (error) {
+        $table.insertAdjacentHTML("afterend", `<p><b> ${error.status} - ${error.message} </b></p>`)
+      }
+    }
+    //Funcion para eliminar un registro
+    async function deleteSS(id) {
+      try {
+        const request = await fetch(`http://localhost:3000/Saiyajines/${id}`, {
+          method: "DELETE",
+        })
+        if (!request.ok) throw { status: request.status, message: request.statusText || "Ocurrio un error" };
+        location.reload()
+      } catch (error) {
+        alert(`${error.status} - ${error.message}`)
+      }
+    }
+    //Funcion para crear o actualizar un registro
+    async function createOrUpdate(data, metod, id = "") {
+      try {
+        const request = await fetch(`http://localhost:3000/Saiyajines/${id}`, {
+          method: metod,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        if (!request.ok) throw { status: request.status, message: request.statusText || "Ocurrio un error" };
+        location.reload()
+      } catch (error) {
+        alert(`${error.status} - ${error.message}`)
+      }
+    }
+    //evento al acrgar la pagina carga todos los registros
+    d.addEventListener("DOMContentLoaded", getAll())
+
+    //Eventos de botones actualizar y eliminar
+    d.addEventListener("click", e => {
+
+      if (e.target.matches(".edit")) {
+        getOne(e.target.dataset.id)
+      }
+
+      if (e.target.matches(".delete")) {
+        let borrar = confirm(`Desa borrar el registro numero ${e.target.dataset.id}`)
+        if (borrar) deleteSS(e.target.dataset.id);
+      }
+
+    })
+
+    //evento para cuando se envia el formulario
+    d.addEventListener("submit", e => {
+      if (e.target === $form) {
+        e.preventDefault()
+        const data = {
+          'nombre': $form.nombre.value,
+          'Ki': $form.ki.value
+        }
+
+        e.target.id.value
+          ? createOrUpdate(data, "PUT", $form.id.value)
+          : createOrUpdate(data, "POST")
+      }
+    })
+
+
+  </script>
+
+
+</body>
+
+</html>
