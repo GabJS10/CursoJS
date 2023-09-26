@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Markdown</title>
+</head>
+
+<body>
+     <h1>Blog con Markdown y showdown.js</h1>
+     <main></main>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.3/showdown.min.js"></script>
+
+     <script>
+          const d = document
+          const $main = d.querySelector("main")
+
+
+          const getMd = async () => {
+               try {
+                    const response = await fetch("../assets/mark.md")
+                    const text = await response.text()
+
+                    if (!response.ok) throw { status: response.status, message: response.statusText || "Ocurrio un error" };
+
+                    return text
+
+               } catch (error) {
+                    console.log(error);
+               }
+          }
+
+
+          d.addEventListener("DOMContentLoaded", e => {
+               getMd()
+                    .then((markdown) => {
+                         const converter = new showdown.Converter({
+                              tables: true,
+                              simpleLinesBreaks: true
+                         })
+
+                         let html = converter.makeHtml(markdown)
+
+                         $main.innerHTML = html
+
+                    })
+          })
+
+     </script>
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Uploader con AJAX(Fetch) y Python</title>
+     <style>
+          html {
+               box-sizing: border-box;
+               font-family: sans-serif;
+               font-size: 16px;
+          }
+
+          *,
+          *:before,
+          *:after {
+               box-sizing: inherit;
+          }
+
+          body {
+               margin: 0;
+          }
+
+          main {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               align-items: center;
+               text-align: center;
+               min-height: 100vh;
+          }
+
+          progress {
+               margin-top: 1rem;
+          }
+     </style>
+</head>
+
+<body>
+     <main>
+          <form enctype="multipart/form-data" id="formulario" method="post">
+               <input type="file" id="files" name="files" multiple>
+               <button type="submit">Subir</button>
+          </form>
+          <div class="progress" id="progressBar"></div>
+     </main>
+
+     <script>
+
+          const d = document
+          const $inputFile = d.getElementById("files")
+          const $formu = d.getElementById("formulario")
+          const $progressbar = d.getElementById("progressBar")
+          let formData = null
+
+
+          const enviar = async (archivo) => {
+               const xhr = new XMLHttpRequest()
+               xhr.addEventListener("readystatechange", e => {
+                    if (xhr.readyState !== 4) return;
+
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                         const respuesta = JSON.parse(xhr.responseText)
+                         console.log(respuesta);
+                    } else {
+                         let message = xhr.statusText || "Ocurrio un error"
+                         console.log(`Code: ${xhr.status}. ${message}`)
+                    }
+               })
+
+               xhr.upload.addEventListener("progress", e => {
+
+                    if (e.lengthComputable) {
+                         var percent = Math.round((e.loaded / e.total) * 100);
+                         p = percent / 4.5
+                         
+                         $progressbar.style.width = p + '%';
+                         $progressbar.style.backgroundColor = "blue"
+                         $progressbar.innerHTML = percent + '%';
+                         console.log(`${percent} %`);
+                         
+                         
+                    }
+               })
+
+               xhr.addEventListener("load", e => {
+                    setTimeout(() => {
+                         $inputFile.value = ''
+                         $progressbar.style.width = '0%';
+                         $progressbar.style.backgroundColor = ""
+                         $progressbar.innerHTML = "";     
+                    }, 3000);
+                    
+               })
+
+               xhr.open("POST", "http://127.0.0.1:5000/upload", true)
+               xhr.setRequestHeader("enc-type", "multipart/form-data")
+               xhr.send(archivo)
+
+          }
+
+          d.addEventListener("submit", e => {
+               if (e.target === $formu) {
+                    e.preventDefault()
+                    for (const file of $inputFile.files) {
+                         formData = new FormData()
+                         formData.append("archivo", file)
+                         enviar(formData)
+                    }
+
+               }
+          })
+
+     </script>
+</body>
+
+</html>

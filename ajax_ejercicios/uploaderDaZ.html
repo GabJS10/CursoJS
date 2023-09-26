@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Uploader con AJAX(Fetch) y Python</title>
+     <style>
+          html {
+      box-sizing: border-box;
+      font-family: sans-serif;
+      font-size: 16px;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    progress {
+      margin-top: 1rem;
+    }
+
+    .drop-zone {
+      margin-left: auto;
+      margin-right: auto;
+      border: thin dotted #000;
+      width: 80%;
+      height: 40vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .drop-zone.is-active {
+      border: thick dashed #000;
+      background-color: rgba(0, 128, 0, .5);
+      animation: pulse 1.5s infinite;
+      animation-timing-function: linear;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+    }
+     </style>
+</head>
+
+<body>
+     <main>
+          <div class="drop-zone" draggable="true">
+               <p>Arratra y suelta...</p>
+          </div>
+     </main>
+
+     <script>
+
+          const d = document
+          const $zona = d.querySelector(".drop-zone")
+          
+          const enviarArchivos = async (archivo) => {
+               try {
+                    const request = await fetch("http://127.0.0.1:5000/upload", {
+                         method: "POST",
+                         headers: { "enc-type": "multipart/form-data" },
+                         body: archivo
+                    })
+
+                    if (!request.ok) throw { status: request.status, message: request.statusText || "Ocurrio un error" };
+
+               } catch (error) {
+                    console.log(`${error.status} - ${error.message}`)
+               }
+          }
+
+          const procesarCarga = (file) => {
+               const $barra = d.createElement("progress"),
+                $texto = d.createElement("span"),
+                reader = new FileReader(),
+                 formData = new FormData()
+
+               $barra.value = 0
+               $barra.max = 100
+
+               d.querySelector("main").insertAdjacentElement("beforeend",$barra)
+               d.querySelector("main").insertAdjacentElement("beforeend",$texto)
+               reader.readAsDataURL(file)
+
+               reader.addEventListener("progress", e => {
+                    const percentLoaded = (event.loaded / event.total) * 100;
+                    $barra.value = percentLoaded
+                    $texto.innerHTML = `${file.name} - ${percentLoaded}%`
+               })
+
+               reader.addEventListener("loadend", e => {
+                    formData.append("archivo",file)
+                    enviarArchivos(formData)
+                    setTimeout(() => {
+                         d.querySelector("main").removeChild($barra)
+                         d.querySelector("main").removeChild($texto)
+                    }, 2000);
+               })
+
+          }
+         
+
+          $zona.addEventListener("dragover", e=> {
+               e.preventDefault()
+               e.stopPropagation()
+               $zona.classList.add("is-active")
+          })
+          
+          $zona.addEventListener("dragleave", e=> {
+               e.preventDefault()
+               e.stopPropagation()
+               $zona.classList.remove("is-active")
+          })
+
+          $zona.addEventListener("drop", e=> {
+               e.preventDefault()
+               e.stopPropagation()
+               $zona.classList.remove("is-active")               
+               for (const file of e.dataTransfer.files) {
+                    procesarCarga(file)
+               }
+
+          })
+
+         
+
+     </script>
+</body>
+
+</html>
