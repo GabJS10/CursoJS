@@ -20,12 +20,19 @@
       display: block;
       margin: auto;
     }
+
+    
   </style>
 </head>
 
 <body>
   <h1>Pokémons</h1>
   <nav class="links"></nav>
+  <br>
+  <div class="loader">
+    <img src="../assets/loader.svg" alt="Cargando">
+  </div>
+  <br>
   <main class="grid-fluid"></main>
 <script>
 
@@ -33,17 +40,17 @@
      const $main = d.querySelector("main")
      const $nav = d.querySelector(".links")
      const $fragment = d.createDocumentFragment()
+     const $loader = d.querySelector(".loader")
      const URL_BASIC= "https://pokeapi.co/api/v2/pokemon/?limit=18&offset=0"
-
      const cargarPokemons = async (url = URL_BASIC) => {
           try {
-              console.log("cargando...");
+              $loader.style.display = "block"
                const response = await fetch(url)
                const json = await response.json()
                if (!response.ok) throw { status: response.status, message: response.statusText || "Ocurrio un error" };
 
                if (json.results) {
-                console.log("cargo");
+                $loader.style.display = "none"
                }
 
                pintarPokemons(json.results)
