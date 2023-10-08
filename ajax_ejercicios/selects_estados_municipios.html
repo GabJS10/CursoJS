@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Selects Anidados</title>
+</head>
+
+<body>
+     <h1>Selects Anidados</h1>
+     <h2>México</h2>
+     <label for="select-primary">Estados</label>
+     <select name="primary" id="select-primary">
+          <option value="">Elige un Estado</option>
+     </select>
+     <p></p>
+     <label for="select-secondary">Municipios</label>
+     <select name="secondary" id="select-secondary">
+          <option value="">Elige un Muinicipio</option>
+     </select>
+     <p></p>
+     <label for="select-third">Colonias</label>
+     <select name="third" id="select-third">
+          <option value="">Elige una Colonia</option>
+     </select>
+     <p></p>
+     <script>
+          const d = document
+          const $select_estados = d.getElementById("select-primary")
+          const $select_municipios = d.getElementById("select-secondary")
+          const $select_colonias = d.getElementById("select-third")
+          const $fragment = d.createDocumentFragment()
+
+          const consultas = async (url, $select,propiedad) => {
+               try {
+                    const response = await fetch(url)
+
+                    if (!response.ok) throw { status: response.status, message: response.statusText || "Error" };
+
+
+                    const json = await response.json()
+
+                    $select.innerHTML = ""
+
+                    console.log(json);
+                    json.response[propiedad].forEach(rs => {
+                         const $option = d.createElement("option")
+                         $option.text = rs
+                         $option.value = rs
+                         $fragment.appendChild($option)
+                    });
+
+                    $select.appendChild($fragment)
+
+               } catch (error) {
+                    console.log(error.status, error.message);
+
+               }
+          }
+
+
+          d.addEventListener("DOMContentLoaded", async e => {
+               consultas("https://api.copomex.com/query/get_estados?token=277bd08c-3108-458b-94c8-3a6a56f9bd3f",$select_estados,"estado")
+          })
+
+
+          d.addEventListener("change", async e => {
+               if (e.target.id === "select-primary") {
+                    if (e.target.value) {
+                         consultas(`https://api.copomex.com/query/get_municipio_por_estado/${e.target.value}?token=277bd08c-3108-458b-94c8-3a6a56f9bd3f`,$select_municipios,"municipios")
+                    }
+               }
+
+               if (e.target.id === "select-secondary") {
+                    if (e.target.value) {
+                         consultas(`https://api.copomex.com/query/get_colonia_por_municipio/${e.target.value}?token=277bd08c-3108-458b-94c8-3a6a56f9bd3f`,$select_colonias,"colonia")
+                    }
+               }
+          })
+
+     </script>
+</body>
+
+</html>

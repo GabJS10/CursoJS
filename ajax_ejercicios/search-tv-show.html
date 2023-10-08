@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador Shows de TV</title>
+  <style>
+    .grid-fluid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .loader {
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Buscador Shows de TV</h1>
+  <input type="search" id="search" placeholder="Buscar shows de tv..." autocomplete="off">
+  <section id="shows" class="grid-fluid"></section>
+  <template id="show-template">
+    <article class="show">
+      <h3></h3>
+      <div></div>
+      <img>
+      <a></a>
+    </article>
+  </template>
+  <script>
+     const d = document
+     const $input = d.getElementById("search")
+     const $section = d.getElementById("shows")
+     const $template = d.getElementById("show-template").content
+     const $fragment = d.createDocumentFragment()
+
+
+     const cargarShows = async(name) => {
+          try {
+          
+          $section.innerHTML = `<div class="loader">
+          <img src="../assets/loader.svg" alt="Cargando">
+          </div>`
+
+          const response = await fetch(`https://api.tvmaze.com/search/shows?q=${name}`)
+          if(!response.ok) throw {status : response.status, message : response.statusText || "Error"};
+          
+          const json = await response.json()
+
+          if(json) $section.innerHTML = "";
+
+          
+          json.forEach(showObject => {
+               $template.querySelector(".show h3").textContent = `${showObject.show.name}`
+               $template.querySelector(".show div").innerHTML = `${showObject.show.summary}`
+               $template.querySelector(".show img").src = `${showObject.show.image.medium}`
+               $template.querySelector(".show a").href = `${showObject.show.url}`
+               $template.querySelector(".show a").textContent = "Ver mas"
+
+               let $clone = d.importNode($template,true)
+
+               $fragment.appendChild($clone)
+          });
+          $section.appendChild($fragment)
+          
+
+          } catch (error) {
+               console.log(error.status, error.message);
+          }          
+     }
+
+     d.addEventListener("keypress", e => {
+          if (e.target === $input) {
+               if (e.keyCode === 13) {
+                    cargarShows(e.target.value)
+               }
+          }
+     })
+
+
+  </script>
+</body>
+
+</html>
