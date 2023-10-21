@@ -1,8 +1,10 @@
 import { App } from "./App.js"
-const d = document
+import API from "./helpers/wp_api.js"
 
 
 
-d.addEventListener("DOMContentLoaded", e => {
+document.addEventListener("DOMContentLoaded", e => {App()})
+window.addEventListener("hashchange",e => {
+     API.page = 1
      App()
 })

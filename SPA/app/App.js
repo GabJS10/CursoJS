@@ -1,8 +1,20 @@
-import API from "../app/helpers/wp_api.js"
+import { Loader } from "./components/Loader.js";
+import { Header } from "./components/Header.js";
+import { Main } from "./components/Main.js";
+import { Router } from "./components/Router.js";
+import { InfiniteScroll } from "./helpers/Infinite_scroll.js";
+
 
 export function App() {
-     document.getElementById("root").innerHTML = "<h1>Bienvenido a mi primer SPA</h1>"
+     const $root = document.getElementById("root")
+     $root.innerHTML = null
+     $root.appendChild(Header())
+     $root.appendChild(Main())
+     $root.appendChild(Loader())
 
-     console.log(API);
+     InfiniteScroll()
+     
+     Router()
+
 }
 
